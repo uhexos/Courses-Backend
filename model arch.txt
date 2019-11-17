@@ -1,0 +1,11 @@
+model architecture
+Membership
+    -type
+    -price
+    -name
+
+Course
+    -title  
+    -description
+    -allowed memberships
+    
