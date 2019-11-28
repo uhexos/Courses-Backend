@@ -1,0 +1,22 @@
+setup react  -- done
+setup cors headers -- done
+setup reactstrap -- done
+
+make homepage
+make all courses page 
+make single course page
+make lesson page.
+
+make User profile page
+build user serialiser and api endpoints
+setup video uploads 
+
+find admin template -- done creativetim black admin dash
+integrate admin template
+
+find video player 
+integrate video player 
+
+find conversion library (ffmpeg)
+integrate conversion library 
+

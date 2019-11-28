@@ -1,24 +1,73 @@
 from django.db import models
-from datetime import date
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 
-class Course (models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    pub_date = models.DateField(default=date.today)
+class Course(models.Model):
+    title = models.CharField(max_length=150, help_text='Enter course title')
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    description = models.TextField(
+        max_length=1000, help_text='Enter a brief description of the course')
+    pub_date = models.DateField(null=True, blank=True)
+    category = models.ForeignKey(
+        'Category', on_delete=models.CASCADE, related_name='category')
+    is_live = models.BooleanField()
+    rating = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
 
 
 class Lesson(models.Model):
-    title = models.CharField(max_length=200)
-    video_url = models.CharField(max_length=200, null=True)
-    thumbnail_url = models.CharField(max_length=200, null=True)
-    description = models.TextField()
-    position = models.IntegerField()
-    course = models.ForeignKey(Course, related_name='lessons',on_delete=models.SET_NULL, null=True)
-    
+    title = models.CharField(max_length=150, help_text='Enter lesson title')
+    video = models.FileField(
+        help_text='Enter course video', null=True )
+    content = models.TextField(help_text='Enter lesson text ', null=True)
+    pub_date = models.DateField(null=True, blank=True)
+    course = models.ForeignKey(
+        'Course', on_delete=models.CASCADE, related_name='lessons')
+    description = models.TextField(
+        max_length=1000, help_text='Enter a brief description of the lesson')
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
     def __str__(self):
         return self.title
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=150, help_text='Enter category title')
+    create_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+class EnrolledCourses(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    course = models.ForeignKey('Course', on_delete=models.CASCADE)
+
+
+class Comments(models.Model):
+    text = models.TextField()
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
+                              on_delete=models.CASCADE)
+    lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE)
+    date = models.DateField()
+
+    def __str__ (self):
+        return self.text
+
+class CustomUser(AbstractUser):
+    is_tutor = models.BooleanField(default=False)
+    # add additional fields in here
+
+    def __str__(self):
+        return self.username
