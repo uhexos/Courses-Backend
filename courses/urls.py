@@ -1,21 +1,14 @@
-"""courses URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
 from django.urls import path
+from .views import CategoryList,CategoryDetail,CourseList,CourseDetail,LessonDetail,LessonList,CustomUserList
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('categories/', CategoryList.as_view(), name='category-list'),
+    path('categories/<int:pk>/', CategoryDetail.as_view() ,name='category-detail'),
+    path('courses/', CourseList.as_view(),name='course-list'),
+    path('courses/<int:pk>/', CourseDetail.as_view(),name='course-detail'),
+    path('courses/<int:pk>/lessons/', LessonList.as_view(),name='lesson-list'),
+    path('courses/<int:pk>/lessons/<int:lpk>/', LessonDetail.as_view(),name='lesson-detail'),
+    path('users/', CustomUserList.as_view(),name='user-list')
 ]
+
+
