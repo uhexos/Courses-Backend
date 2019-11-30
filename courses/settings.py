@@ -76,14 +76,16 @@ WSGI_APPLICATION = 'courses.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.sqlite3',
         'OPTIONS': {
             # 'read_default_file': '/path/to/my.cnf',
             'database':'courses',
             'user':'user',
             'password':'password',
-            # 'default-character-set':'utf8',            
+            # 'default-character-set':'utf8',     
         },
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -113,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Accra'
 
 USE_I18N = True
 
